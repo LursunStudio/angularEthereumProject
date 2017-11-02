@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <!-- Content Wrapper. Contains page content -->
+  <!-- Error message alert Here -->
+  <div bsModal class="modal fade" #errorAlertModal="bs-modal" tabindex="-1" role="dialog">
+    <app-alert></app-alert>
+  </div>
+  <!-- root modal -->
+  <div bsModal class="modal fade" #alertModal="bs-modal" tabindex="-1" role="dialog">
+    <app-alert></app-alert>
+  </div>
+  <div bsModal class="modal fade" #yesOrNoModal="bs-modal" tabindex="-1" role="dialog">
+    <app-yes-or-no></app-yes-or-no>
+  </div>
+  <div bsModal class="modal fade" #promptModal="bs-modal" tabindex="-1" role="dialog">
+    <app-prompt></app-prompt>
+  </div>
+  <div bsModal class="modal fade" #loginModal="bs-modal" tabindex="-1" role="dialog">
+    <app-login></app-login>
+  </div>
+  <div bsModal class="modal fade" #signupModal="bs-modal" tabindex="-1" role="dialog">
+    <app-signup></app-signup>
+  </div>
+  <div bsModal class="modal fade" #settleOrRecordModal="bs-modal" tabindex="-1" role="dialog">
+    <app-settle-or-record></app-settle-or-record>
+  </div>
+  <div bsModal class="modal fade" #createContractModal="bs-modal" tabindex="-1" role="dialog">
+    <app-create-contract></app-create-contract>
+  </div>
+  <div bsModal class="modal fade" #joinContractModal="bs-modal" tabindex="-1" role="dialog">
+    <app-join-contract></app-join-contract>
+  </div>
+  <!-- /.modal -->
+  <div class="content-wrapper">
+    <!-- Your Page Content Here -->
+    <router-outlet></router-outlet>
+  </div>
+  <!-- /.content-wrapper -->
+
+  <app-footer></app-footer>
+</div>

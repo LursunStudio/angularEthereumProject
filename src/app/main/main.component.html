@@ -1,0 +1,17 @@
+<section class="content-header">所有合約</section>
+<section class="content">
+  <div class="row">
+    <div *ngFor="let address of contractService.contractsAddress" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="box box-info">
+        <div class="box-header with-border">創建人：{{ contractService.contractsList[address].accountID }}</div>
+        <div class="box-body">{{ contractService.contractsList[address].description }}</div>
+        <div class="box-footer">
+          <div class="pull-right">
+            <button *ngIf="contractService.contractsList[address].accountID !== accountService.accountID" href="#" class="btn btn-default" (click)="join(address)">參與</button>
+            <button *ngIf="contractService.contractsList[address].accountID === accountService.accountID" href="#" class="btn btn-default" (click)="settleOrRecord(address)">結算或紀錄</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

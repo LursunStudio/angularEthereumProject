@@ -1,0 +1,34 @@
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+    <ul class="sidebar-menu tree" data-widget="tree">
+      <div class="user-panel" [routerLink]="'/profile'" *ngIf="loginCheck()">
+        <div class="pull-left image">
+          <img src="assets/大頭貼.jpg" class="img-circle" title="大頭貼" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{ accountService.name }}</p>
+          <p>點數剩餘：{{ accountService.balance }}</p>
+        </div>
+      </div>
+      <li class="header">操作項目</li>
+      <li class="treeview">
+        <a href="#" [routerLink]="'/main'">
+          <i class="fa fa-files-o"></i>
+          <span>所有合約</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a href="#" [routerLink]="'/mycontract'" *ngIf="loginCheck()">
+          <i class="fa fa-files-o"></i>
+          <span>我的合約</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a href="#" [routerLink]="'/explorer'">
+          <i class="fa fa-search"></i>
+          <span>Explorer</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</aside>

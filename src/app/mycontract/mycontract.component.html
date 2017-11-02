@@ -1,0 +1,33 @@
+<section class="content-header">
+  我的合約
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="box box-info">
+        <div class="box-header with-border">建立合約</div>
+        <div class="box-body" style="color:#999">你即將建立合約</div>
+        <div class="box-footer">
+          <div class="pull-right">
+            <button href="#" class="btn btn-default" (click)="createContract()">
+              <div class="fa fa-plus"></div> 建立合約
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div *ngFor="let address of contractsAddress" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="box box-info" *ngIf="contractService.contractsAddress.length > 0">
+          <div class="box-header with-border">創建人：{{ contractService.contractsList[address].accountID }}</div>
+          <div class="box-body">{{ contractService.contractsList[address].description }}</div>
+          <div class="box-footer">
+            <div class="pull-right">
+              <button href="#" class="btn btn-default" [ngClass]="{ 'disabled': contractService.contractsList[address].accountID === accountService.accountID }" (click)="join(address)">參與</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+</section>
