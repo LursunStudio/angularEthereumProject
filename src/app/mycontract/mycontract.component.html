@@ -23,7 +23,8 @@
           <div class="box-body">{{ contractService.contractsList[address].description }}</div>
           <div class="box-footer">
             <div class="pull-right">
-              <button href="#" class="btn btn-default" [ngClass]="{ 'disabled': contractService.contractsList[address].accountID === accountService.accountID }" (click)="join(address)">參與</button>
+              <button href="#" class="btn btn-default" [ngClass]="{ 'disabled': contractService.contractsList[address].accountID ===
+               accountService.accountID }" (click)="join(address)">參與</button>
             </div>
           </div>
         </div>

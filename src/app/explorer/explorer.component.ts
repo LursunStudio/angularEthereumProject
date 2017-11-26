@@ -57,7 +57,7 @@ export class ExplorerComponent implements OnInit {
     const count: any = await new Promise((resolve, reject) => {
       // status
       this.httpClientService.get('/fabric/status/get').subscribe(
-        next => {
+        (next) => {
           const data = next.json();
           this.chaincodeCount = data.chaincodeCount;
           this.latestBlock = data.latestBlock;
@@ -75,7 +75,7 @@ export class ExplorerComponent implements OnInit {
       promiseList.push(
         new Promise((resolve, reject) => {
           this.httpClientService.postJson('/fabric/block/get', { number: i }).subscribe(
-            next => {
+            (next) => {
               const data = next.json();
               resolve(data);
             },
@@ -90,7 +90,7 @@ export class ExplorerComponent implements OnInit {
 
     // peer list
     this.httpClientService.get('/fabric/peerlist').subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.peerList = data;
       },
@@ -99,7 +99,7 @@ export class ExplorerComponent implements OnInit {
 
     // chaincode list
     this.httpClientService.get('/fabric/chaincodelist').subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.chaincodeList = data;
       },
@@ -118,7 +118,7 @@ export class ExplorerComponent implements OnInit {
   }
   getBlockRawDate(num) {
     this.httpClientService.postJson('/fabric/block/json', { number: num }).subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.rawDateJson = JSON.stringify(data, null, 2);
         this.rawDataModal.show();
@@ -128,7 +128,7 @@ export class ExplorerComponent implements OnInit {
   }
   public getGetTxRawDate(txid) {
     this.httpClientService.postJson('/fabric/tx/json', { number: txid }).subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.rawDateJson = JSON.stringify(data, null, 2);
         this.rawDataModal.show();
@@ -138,7 +138,7 @@ export class ExplorerComponent implements OnInit {
   }
   blockGetInfo(num) {
     this.httpClientService.postJson('/fabric/block/getinfo', { number: num }).subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.blockInfo = data;
       },
@@ -147,7 +147,7 @@ export class ExplorerComponent implements OnInit {
   }
   txGetInfo(txid) {
     this.httpClientService.postJson('/fabric/tx/getinfo', { txid: txid }).subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         this.txInfo = data;
       },

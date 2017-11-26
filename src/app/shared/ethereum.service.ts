@@ -11,12 +11,12 @@ export class EthereumService {
     }
     public getContracts(account) {
         this.httpClientService.post('/ethereum/getContracts', {}).subscribe(
-            next => {
+            (next) => {
                 const data = next.json();
                 this.contractsAddress = data.contractsAddress;
                 this.contractsList = data.contractsList;
             },
-            error => {
+            (error) => {
                 console.log(error);
             },
         );

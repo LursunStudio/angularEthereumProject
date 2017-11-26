@@ -63,7 +63,7 @@ export class AccountService {
     }
     public getBalance() {
         this.ethereumService.getBalance(this.address).subscribe(
-            next => {
+            (next) => {
                 const data = next.json();
                 if (data.success) {
                     this.balance = parseFloat(data.message) / 1000000000000000000;

@@ -241,6 +241,7 @@ exports.getContracts = module.exports.getContracts = async() => {
     contractsAddressCollection.find({}, {
       _id: false,
     }).toArray(function (err, result) {
+      if (result.length == 0) resolve(false);
       resolve(result[0].list)
     })
   })

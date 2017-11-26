@@ -49,7 +49,7 @@ export class JoinContractComponent implements OnInit {
         this.closeModal();
         document.getElementById('joinContractBtn').classList.add('disabled');
       },
-      error => {
+      (error) => {
         console.log(error);
         this.closeModal();
         document.getElementById('joinContractBtn').classList.add('disabled');

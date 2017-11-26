@@ -40,7 +40,7 @@ let getCoinbase = () => {
       }
       coinbase = result;
       resolve(result);
-    }).catch(error => {
+    }).catch((error) => {
       return error;
     });
   });

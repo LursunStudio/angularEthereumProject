@@ -23,15 +23,15 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
   ngOnInit() {
     this.httpClientService.get('').subscribe(
-      next => {
+      (next) => {
         console.log('%cconnect to web server normal', 'color:#20C0ED');
       },
-      error => {
+      (error) => {
         console.log(`%ccan't not connect to web server`, 'color:#DB4D3F');
       }
     );
     this.httpClientService.postJson('/ethereum/getCoinbase', {}).subscribe(
-      next => {
+      (next) => {
         const data = next.json();
         if (data.success) {
           console.log(`%cconnect to geth server normal`, 'color:#20C0ED');
@@ -39,7 +39,7 @@ export class AppComponent implements AfterViewInit, OnInit {
           console.log(`%ccan't not connect to geth server`, 'color:#DB4D3F');
         }
       },
-      error => {
+      (error) => {
         console.log(`%ccan't not connect to server`, 'color:#DB4D3F');
       }
     );

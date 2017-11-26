@@ -12,13 +12,13 @@ export class ContractService {
     public getContracts() {
         const update = () => {
             this.httpClientService.postJson('/ethereum/getContracts', {}).subscribe(
-                next => {
+                (next) => {
                     const data = next.json();
                     this.contractsAddress = data.contractsAddress;
                     this.contractsList = data.contractsList;
                     console.log(data);
                 },
-                error => {
+                (error) => {
                     console.log(error);
                 },
                 () => {
@@ -32,13 +32,13 @@ export class ContractService {
         // reject???
         return new Promise((resolve) => {
             this.httpClientService.postJson('/ethereum/getContractTotal', {address: address}).subscribe(
-                next => {
+                (next) => {
                     const data = next.json();
                     if (data.success) {
                         resolve(data.total);
                     }
                 },
-                error => {
+                (error) => {
                     reject(error);
                 },
             );
