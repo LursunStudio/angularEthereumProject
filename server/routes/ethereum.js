@@ -269,6 +269,59 @@ router.post('/getContractTotal', async(req, res) => {
   });
 });
 
+router.post('/recordWeight', async(req, res) => {
+  let accountID = req.body['accountID'];
+  let password = req.body['password'];
+  let contractAddress = req.body['contractAddress'];
+  let recordWeight = req.body['recordWeight'];
+
+  let account = await mongodb.agreeAccount(accountID, password);
+  if (!account) {
+    res.send(JSON.stringify({
+      success: false,
+      error: "帳戶或密碼不正確"
+    }));
+    return;
+  }
+
+  let result = await zhuanti.recordWeight(account.address, password, contractAddress, recordWeight);
+  if (result) {
+    await mongodb.recordWeight(contractAddress, recordWeight);
+    res.send({
+      success: true,
+    });
+    return;
+  }
+
+});
+
+router.post('/settle', async(req, res) => {
+  let accountID = req.body['accountID'];
+  let password = req.body['password'];
+  let contractAddress = req.body['contractAddress'];
+
+  let account = await mongodb.agreeAccount(accountID, password);
+  if (!account) {
+    res.send(JSON.stringify({
+      success: false,
+      error: "帳戶或密碼不正確"
+    }));
+    return;
+  }
+
+  let result = await zhuanti.settle(account.address, password, contractAddress);
+  if (result) {
+    await mongodb.settle(contractAddress);
+    res.send({
+      success: true,
+    });
+    return;
+  }
+  res.send({
+    success: false,
+  });
+});
+
 router.all(/\/([\w\W]+)/, async(req, res) => {
   res.send(JSON.stringify({
     success: false,

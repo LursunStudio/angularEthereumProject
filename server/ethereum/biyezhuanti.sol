@@ -34,7 +34,7 @@ contract jianfe {
             _;
         }
     }
-    function jianfe(address _initiator,int8 _targetWeight ,int8 _lastWeight ,uint _expiryDate) payable {
+    function jianfe(address _initiator,int8 _targetWeight ,int8 _lastWeight ,uint _expiryDate) payable public{
         initiator = _initiator;
         targetWeight = _targetWeight;
         lastWeight = _lastWeight;
@@ -47,7 +47,7 @@ contract jianfe {
 
     }
 
-    function support() timeout toRaise payable { //支持
+    function support() timeout toRaise payable public{ //支持
         supportAmount += msg.value;
         if(supportProportion[msg.sender] > 0) {
             supportProportion[msg.sender] += msg.value;
@@ -58,7 +58,7 @@ contract jianfe {
         }
     }
 
-    function oppose() timeout toRaise payable { //反對
+    function oppose() timeout toRaise payable public{ //反對
         opposeAmount += msg.value;
         if(opposeProportion[msg.sender] > 0) {
             opposeProportion[msg.sender] += msg.value;
@@ -69,7 +69,7 @@ contract jianfe {
         }
     }
 
-    function recordWeight(int8 _lastWeight) timeout { //記錄體重
+    function recordWeight(int8 _lastWeight) timeout public { //記錄體重
         if(initiator == msg.sender) {
             lastWeight = _lastWeight;
             if (lastWeight <= targetWeight) {
@@ -78,7 +78,7 @@ contract jianfe {
         }
     }
     
-    function settle() { //結算
+    function settle() public{ //結算
         if(now >= expiryDate * 1 seconds || initiator == msg.sender) {
             if (lastWeight <= targetWeight || opposeAmount == 0) {
                 settleEvent(amount,now, "support");
@@ -100,7 +100,7 @@ contract zhuanti {
     mapping (address => address) public contractMap;
     event createContractEvent(address _jianfeAddress ,uint256 _margin ,uint _expiryDate);
 
-    function createContract(int8 _targetWeight ,int8 _lastWeight ,uint _expiryDate) payable { //建立合約
+    function createContract(int8 _targetWeight ,int8 _lastWeight ,uint _expiryDate) payable public{ //建立合約
         if( _targetWeight != 0 &&  msg.value != 0) {
             contractMap[msg.sender] = (new jianfe).value( msg.value )(msg.sender ,_targetWeight , _lastWeight , _expiryDate ) ;
             createContractEvent( contractMap[msg.sender] ,msg.value , _expiryDate);

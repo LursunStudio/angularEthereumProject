@@ -13,6 +13,7 @@ export class MycontractComponent implements OnInit, AfterViewChecked {
   constructor(private modalService: ModalService, public accountService: AccountService, public contractService: ContractService) { }
 
   ngOnInit() {
+    console.log(this.accountService.contractsAddress);
   }
   createContract() {
     this.modalService.createContract.show();
@@ -35,6 +36,25 @@ export class MycontractComponent implements OnInit, AfterViewChecked {
         this.modalService.data.address = address;
         this.modalService.data.total = parseFloat(await this.contractService.getContractTotal(address)) / 1000000000000000000 || 'N/A';
         this.modalService.joinContract.show();
+      } else {
+        this.modalService.login.show();
+      }
+    }
+  }
+
+  async settleOrRecord(address) {
+    if (this.contractService.contractsList[address].accountID === this.accountService.accountID) {
+      if (this.accountService.LoginCheck()) {
+        this.modalService.data.accountID = this.contractService.contractsList[address].accountID;
+        this.modalService.data.targetWeight = this.contractService.contractsList[address].targetWeight;
+        this.modalService.data.lastWeight = this.contractService.contractsList[address].lastWeight;
+        this.modalService.data.margin = parseFloat(this.contractService.contractsList[address].margin) / 1000000000000000000;
+        const date = new Date(this.contractService.contractsList[address].expiryDate);
+        this.modalService.data.expiryDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        this.modalService.data.description = this.contractService.contractsList[address].description;
+        this.modalService.data.address = address;
+        this.modalService.data.total = parseFloat(await this.contractService.getContractTotal(address)) / 1000000000000000000 || 'N/A';
+        this.modalService.settleOrRecord.show();
       } else {
         this.modalService.login.show();
       }

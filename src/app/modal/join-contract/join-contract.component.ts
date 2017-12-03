@@ -46,14 +46,14 @@ export class JoinContractComponent implements OnInit {
         if (data.success) {
           this.accountService.contractsAddress = data.contractsAddress;
         }
-        this.closeModal();
-        document.getElementById('joinContractBtn').classList.add('disabled');
       },
       (error) => {
         console.log(error);
+      }, () => {
         this.closeModal();
-        document.getElementById('joinContractBtn').classList.add('disabled');
-      },
+        document.getElementById('joinContractBtn').classList.remove('disabled');
+        this.accountService.getBalance();
+      }
     );
   }
 }

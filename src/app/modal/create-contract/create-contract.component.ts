@@ -60,8 +60,8 @@ export class CreateContractComponent implements OnInit {
     this.httpClientService.postJson('/ethereum/createContract', value).subscribe(
       (next) => {
         const data = next.json();
-        if (data) {
-          this.accountService.contractsAddress.push(...data.contractsAddress);
+        if (data.success) {
+          this.accountService.contractsAddress = data.contractsAddress;
         } else {
           alert('建立失敗');
         }
@@ -70,6 +70,8 @@ export class CreateContractComponent implements OnInit {
       (error) => {
         console.log(error);
         document.getElementById('createContractBtn').classList.remove('disabled');
+      }, () => {
+        this.accountService.getBalance();
       }
     );
   }

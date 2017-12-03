@@ -76,9 +76,7 @@ exports.saveZhuantiContractAddress = module.exports.saveZhuantiContractAddress =
  */
 exports.newAccount = module.exports.newAccount = async(info) => {
   let accountsCollection = await getCollection('accounts');
-  accountsCollection.insert(info, function (err, data) {
-    console.log(err, data);
-  });
+  accountsCollection.insert(info, function (err, data) {});
 }
 
 /**
@@ -167,7 +165,7 @@ exports.createContract = module.exports.createContract = async(accountID, contra
   // {{合約資料}}增加一筆
   let contractsCollection = await getCollection('contracts');
   contractsCollection.insert(contract, function (err, data) {
-    console.log(err, data)
+    
   })
 
   // {{合約地址}}清單增加一筆
@@ -241,7 +239,10 @@ exports.getContracts = module.exports.getContracts = async() => {
     contractsAddressCollection.find({}, {
       _id: false,
     }).toArray(function (err, result) {
-      if (result.length == 0) resolve(false);
+      if (result.length == 0) {
+        resolve([]);
+        return;
+      }
       resolve(result[0].list)
     })
   })
@@ -292,5 +293,46 @@ exports.getAccountAddress = module.exports.getAccountAddress = async(accountID) 
     }).toArray(function (err, result) {
       resolve(result);
     })
+  })
+}
+
+module.exports.recordWeight = async(contractAddress, recordWeight) => {
+  let contractsCollection = await getCollection('contracts');
+  contractsCollection.update({
+    contractAddress: contractAddress
+  }, {
+    $set: {
+      lastWeight: recordWeight
+    }
+  })
+}
+
+
+module.exports.settle = async(contractAddress) => {
+  let contractsCollection = await getCollection('contracts');
+  contractsCollection.deleteOne({
+    contractAddress: contractAddress
+  })
+  let contractsAddressCollection = await getCollection('contractsAddress');
+
+
+  let contractsAddress = await new Promise((resolve, reject) => {
+    contractsAddressCollection.find({}, {
+      _id: false,
+    }).toArray(function (err, result) {
+      if (result.length == 0) {
+        resolve([]);
+        return;
+      }
+      resolve(result[0].list)
+    })
+  })
+  let index = contractsAddress.indexOf(contractAddress);
+  contractsAddress.splice(index,1);
+
+  contractsAddressCollection.update({}, {
+    $set: {
+      list: contractsAddress
+    }
   })
 }

@@ -180,6 +180,7 @@ module.exports.createContract = async(userAddress, contractData) => {
     let zhuantiContractAddress = await getZhuantiContractAddress();
     let zhuantiContract = new web3Client.eth.Contract(contract_conf.zhuantiABI, zhuantiContractAddress);
     try {
+      await web3Client.getAccount(userAddress, contractData.password);
       let result = await zhuantiContract.methods.createContract(contractData.targetWeight, contractData.lastWeight, contractData.expiryDate)
         .send({
           from: userAddress,
@@ -202,4 +203,44 @@ module.exports.getBalance = async(address) => {
 
 module.exports.newAccount = (password) => {
   return web3Client.eth.personal.newAccount(password);
+}
+
+module.exports.recordWeight = async(userAddress, password, contractAddress, recordWeight) => {
+  let unlock = await web3Client.getAccount(userAddress, password);
+  if (unlock) {
+    let jianfeContract = new web3Client.eth.Contract(contract_conf.jianfeABI, contractAddress);
+    try {
+      await jianfeContract.methods.recordWeight(recordWeight)
+        .send({
+          from: userAddress,
+          gasPrice: 90000,
+          gas: 1000000
+        })
+      return true;
+    } catch (error) {
+      console.log('error', error);
+      return false;
+    }
+  }
+  return false;
+}
+
+module.exports.settle = async(userAddress, password, contractAddress) => {
+  let unlock = await web3Client.getAccount(userAddress, password);
+  if (unlock) {
+    let jianfeContract = new web3Client.eth.Contract(contract_conf.jianfeABI, contractAddress);
+    try {
+      await jianfeContract.methods.settle()
+        .send({
+          from: userAddress,
+          gasPrice: 90000,
+          gas: 1000000
+        })
+      return true;
+    } catch (error) {
+      console.log('error', error);
+      return false;
+    }
+  }
+  return false;
 }
