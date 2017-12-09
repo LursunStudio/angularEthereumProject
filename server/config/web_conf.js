@@ -3,8 +3,6 @@ console.log(`../environment/environment${env}.js`)
 env = require(`../environment/environment${env}.js`);
 
 let conf = {
-  bitcoinEnable: process.env.BITCOINENABLE || 'false',
-  ethereumEnable: process.env.ETHEREUMENABLE || 'true',
   fabricEnable: process.env.FABRICENABLE || 'false',
   httpsEnable: process.env.HTTPSENABLE || process.env.SSLENABLE || 'true',
   port: process.env.PORT || '8081',
@@ -14,3 +12,4 @@ let conf = {
 }
 Object.assign(conf, env);
 module.exports = conf;
+

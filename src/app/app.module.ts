@@ -30,9 +30,7 @@ import { CreateContractComponent } from './modal/create-contract/create-contract
 // pages
 import { MainComponent } from './main/main.component';
 import { MycontractComponent } from './mycontract/mycontract.component';
-import { ProfileComponent } from './profile/profile.component';
 import { JoinContractComponent } from './modal/join-contract/join-contract.component';
-import { ExplorerComponent } from './explorer/explorer.component';
 import { SettleOrRecordComponent } from './modal/settle-or-record/settle-or-record.component';
 
 @NgModule({
@@ -41,14 +39,12 @@ import { SettleOrRecordComponent } from './modal/settle-or-record/settle-or-reco
     MainComponent,
     MycontractComponent,
     SignupComponent,
-    ProfileComponent,
     CreateContractComponent,
     JoinContractComponent,
     LoginComponent,
     AlertComponent,
     PromptComponent,
     YesOrNoComponent,
-    ExplorerComponent,
     SettleOrRecordComponent,
   ],
   imports: [
